@@ -1,6 +1,6 @@
 # org.mfat.portmonitor.desktop
 [Desktop Entry]
-Name=Ports Monitor
+Name=Port Monitor
 Comment=Monitor and manage network ports and their processes
 Exec=portmonitor
 Icon=security-medium

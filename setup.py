@@ -24,5 +24,5 @@ setup(
     description="Monitor and manage network ports and their processes",
     license="GPL-3.0",
     keywords="network ports monitor gtk4 libadwaita",
-    url="https://github.com/mfat/portsmonitor",
+    url="https://github.com/mfat/portmonitor",
 )

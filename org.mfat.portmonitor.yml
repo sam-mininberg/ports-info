@@ -1,4 +1,3 @@
-# org.mfat.portmonitor.yml
 app-id: org.mfat.portmonitor
 runtime: org.gnome.Platform
 runtime-version: '45'
@@ -13,16 +12,20 @@ finish-args:
   - --system-talk-name=org.freedesktop.PolicyKit1
   - --system-talk-name=org.freedesktop.login1
 modules:
+  - name: python3-psutil
+    buildsystem: simple
+    sources:
+      - type: archive
+        url: https://github.com/giampaolo/psutil/archive/release-5.9.8.tar.gz
+        sha256: 87ea47859941731b32be51163f1fc27fae5c191dcb49723e58db6e90ee4d3863
+    build-commands:
+      - python3 setup.py install --prefix=/app
+
   - name: portmonitor
     buildsystem: meson
     sources:
       - type: git
-        url: https://github.com/mfat/portsmonitor.git
+        url: https://github.com/mfat/portmonitor.git
         branch: main
     build-commands:
       - python3 setup.py install --prefix=/app
-    modules:
-      - name: python3-psutil
-        buildsystem: simple
-        build-commands:
-          - pip3 install --prefix=/app psutil
