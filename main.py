@@ -2,7 +2,7 @@
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, GLib, Gio, Gdk
+from gi.repository import Gtk, Adw, GLib, Gio, Gdk, Pango
 import subprocess
 import pwd
 import os
@@ -13,7 +13,7 @@ class PortMonitorWindow(Adw.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_default_size(800, 600)
-        self.set_title("Ports - Listening Ports Information")
+        self.set_title("Ports Info - Listening Ports Information")
         self.all_ports = []
         self.is_root = False
 
@@ -210,12 +210,12 @@ class PortMonitorWindow(Adw.ApplicationWindow):
         return True
 
     def show_error_dialog(self, message):
-        dialog = Adw.MessageDialog(
+        dialog = Adw.MessageDialog.new(
             transient_for=self,
             heading="Error",
             body=message
         )
-        dialog.add_response("ok", "OK")
+        dialog.add_response("ok", "_OK")
         dialog.present()
 
     def run_with_sudo(self, cmd):
@@ -337,21 +337,21 @@ class PortMonitorWindow(Adw.ApplicationWindow):
             subtitle = f"{port_data['name']}"
         row.set_subtitle(subtitle)
 
-        # Create details box with dark background
+        # Create details box
         details_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         details_box.set_margin_start(12)
         details_box.set_margin_end(12)
         details_box.set_margin_top(6)
         details_box.set_margin_bottom(6)
+        details_box.add_css_class("dark")  # Add dark background
         
-        # Add CSS class for dark background
-        details_box.add_css_class('card')
-        details_box.add_css_class('dark')
-        
-        # Helper function to create styled labels
+        # Helper function to create labels with proper wrapping
         def create_detail_label(text):
             label = Gtk.Label(label=text, xalign=0)
-            label.add_css_class('white')
+            label.set_wrap(True)
+            label.set_wrap_mode(Pango.WrapMode.WORD_CHAR)
+            label.set_hexpand(True)
+            label.add_css_class("white")  # Add white text
             return label
 
         # Network Details
@@ -373,8 +373,9 @@ class PortMonitorWindow(Adw.ApplicationWindow):
             try:
                 process_info = port_data['process_info']
                 
-                # Add a separator
+                # Add a separator with white color
                 separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
+                separator.add_css_class("white")  # Make separator white
                 separator.set_margin_top(6)
                 separator.set_margin_bottom(6)
                 details_box.append(separator)
@@ -422,7 +423,12 @@ class PortMonitorWindow(Adw.ApplicationWindow):
                     f"Process information unavailable: {str(e)}"
                 ))
 
-        row.add_row(details_box)
+        # Create a scrolled window to contain the details box
+        scrolled = Gtk.ScrolledWindow()
+        scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.NEVER)
+        scrolled.set_child(details_box)
+
+        row.add_row(scrolled)
         return row
 
     def parse_ss_output(self, output):
@@ -563,9 +569,14 @@ class PortMonitorWindow(Adw.ApplicationWindow):
 
 class PortMonitorApp(Adw.Application):
     def __init__(self):
-        super().__init__(application_id="org.mfat.ports",
+        super().__init__(application_id="com.github.mfat.ports-info",
                         flags=Gio.ApplicationFlags.FLAGS_NONE)
         self.connect('activate', self.on_activate)
+        self.connect('shutdown', self.on_shutdown)  # Add shutdown handler
+        
+        # Set default app icon
+        icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+        icon_theme.add_search_path("/usr/share/icons/hicolor/scalable/apps")
         
         # Add keyboard shortcuts
         self.set_accels_for_action("win.search", ["<Control>f"])
@@ -576,19 +587,26 @@ class PortMonitorApp(Adw.Application):
 
     def on_activate(self, app):
         win = PortMonitorWindow(application=app)
+        win.set_icon_name("ports-info")
         win.present()
+
+    def on_shutdown(self, app):
+        # Ensure clean shutdown
+        for window in self.get_windows():
+            window.is_shutting_down = True
+            window.close()
 
     def on_about_action(self, action, param):
         about = Adw.AboutWindow(
             transient_for=self.get_active_window(),
-            application_name="Ports",
+            application_name="PortsInfo",
             application_icon="security-medium",
             developer_name="mFat",
             version="1.0",
-            website="https://github.com/mfat/portsmonitor",
+            website="https://github.com/mfat/ports",
             license_type=Gtk.License.GPL_3_0,
             developers=["mFat"],
-            copyright="© 2024 mFat"
+            copyright=" 2024 mFat"
         )
         about.present()
 
