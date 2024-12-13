@@ -1,2 +1,2 @@
-# Ports Monitor
-Simple utility to show open ports on linux systems
+# Ports
+Simple utility to show onformation about all listening ports on linux systems
