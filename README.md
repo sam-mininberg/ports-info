@@ -6,7 +6,7 @@ Simple utility to show information about all listening ports on linux systems
 
 This is a simple graphical utility to list ports that are listening for connections on a linux system. To put it simply, it sorts all servers running on your system, which can accept incoming connections.
 
-The app runs netstat and ss under the hood. It requires admin priviledges to display additional info (process/command/PID).
+The app runs netstat and ss under the hood. It requires admin priviledges to display additional info (process/command/PID). If you don't have root (sudo) access, it falls back to a limited mode, displaying less information.
 
 ## Features
 - See a list of TCP and UDP ports listening for connections
