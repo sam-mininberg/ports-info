@@ -16,8 +16,7 @@ The app runs [netstat](https://manned.org/netstat.8) and [ss](https://manned.org
 
 ## Features
 - See a list of TCP and UDP ports listening for connections
-- Search through entries by port number or process name. For example you can searhch for mysql to see which port it's listening on.
-- Ctrl+F shortcut for quick search
+- Search through entries by port number or process name. Just start typing "systemd-resolved" or "53". No need to even click the search button. 
 - Show additional info for each entry
 
 ## Download/Installation
