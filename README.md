@@ -15,7 +15,10 @@ The app runs netstat and ss under the hood. It requires admin priviledges to dis
 - Show additional info for each entry
 
 ## Download/Installation
-There are packages for Debian/Ubuntu and Fedora/Redhat. Head to the [releases](https://github.com/mfat/ports-info/releases) section to download.
+
+There are packages for Debian/Ubuntu and Fedora/Redhat, and a universal AppImage that should run on any modern linux distribution. To run the AppImage, you should first make it executable with `chmod +x *.AppImage`
+
+Head to the [releases](https://github.com/mfat/ports-info/releases) section to download.
 
 You can also run the app directly from source. See the requirements.txt to know which modules you need to install.
 
