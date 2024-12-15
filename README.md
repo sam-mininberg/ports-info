@@ -12,7 +12,7 @@ This is a simple graphical utility to list ports that are listening for connecti
 - Which process is listening on port number y?
 
 
-The app runs netstat and ss under the hood. It requires admin priviledges to display additional info (process/command/PID). If you don't have root (sudo) access, it falls back to a limited mode, displaying less information.
+The app runs [netstat](https://manned.org/netstat.8) and [ss](https://manned.org/man/ss) under the hood. It requires admin priviledges to display additional info (process/command/PID). If you don't have root (sudo) access, it falls back to a limited mode, displaying less information.
 
 ## Features
 - See a list of TCP and UDP ports listening for connections
