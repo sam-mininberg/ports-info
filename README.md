@@ -1,6 +1,5 @@
 # PortsInfo
 
-
 Simple utility to show information about all listening ports on linux systems
 ![Screenshot From 2024-12-14 02-26-31](https://github.com/user-attachments/assets/0a9b1a36-c4ea-4b38-8229-30e59829f8f4)
 
@@ -10,7 +9,6 @@ This is a simple graphical utility to list ports that are listening for connecti
 
 - Wihch port is being used by process x?
 - Which process is listening on port number y?
-
 
 The app runs [netstat](https://manned.org/netstat.8) and [ss](https://manned.org/man/ss) under the hood. It requires admin priviledges to display additional info (process/command/PID). If you don't have root (sudo) access, it falls back to a limited mode, displaying less information.
 
@@ -26,4 +24,7 @@ There are packages for Debian/Ubuntu and Fedora/Redhat, and a universal AppImage
 Head to the [releases](https://github.com/mfat/ports-info/releases) section to download.
 
 You can also run the app directly from source. See the requirements.txt to know which modules you need to install.
+
+### PortsInfo mentioned in [episode 593 of Linux Unplugged poscast](https://linuxunplugged.com/593?t=3) ###
+
 
