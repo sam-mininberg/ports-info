@@ -5,6 +5,6 @@ Comment=Network port information viewer
 Icon=io.github.mfat.portsinfo
 Exec=ports-info
 Terminal=false
-Categories=Network;System;Utility;GTK;
+Categories=Network;Utility;
 Keywords=network;ports;networking;system;
 StartupNotify=true 
