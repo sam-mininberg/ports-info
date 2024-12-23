@@ -25,9 +25,9 @@ modules:
   - name: python3-psutil
     buildsystem: simple
     build-commands:
-      - pip3 install --prefix=/app psutil
+      - python3 setup.py install --prefix=/app --root=/
     sources:
-      - type: file
+      - type: archive
         url: https://files.pythonhosted.org/packages/source/p/psutil/psutil-5.9.8.tar.gz
         sha256: 6be126e3225486dff286a8fb9a06246a5253f4c7c53b475ea5f5ac934e64194c
 
