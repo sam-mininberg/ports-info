@@ -22,6 +22,15 @@ modules:
         url: https://download.gnome.org/sources/pygobject/3.46/pygobject-3.46.0.tar.xz
         sha256: 426008b2dad548c9af1c7b03b59df0440fde5c33f38fb5406b103a43d653cafc
 
+  - name: python3-psutil
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=/app psutil
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/source/p/psutil/psutil-5.9.8.tar.gz
+        sha256: 5410638e4df39c54d957fc51ce03048acd8e6d60abc0f5107af51e5fb566eb3c
+
   - name: ports-info
     buildsystem: simple
     build-commands:
