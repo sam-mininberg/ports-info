@@ -16,6 +16,9 @@ finish-args:
   - --socket=system-bus
   - --talk-name=org.freedesktop.DBus
   - --system-talk-name=org.freedesktop.DBus
+  # PolicyKit access
+  - --system-talk-name=org.freedesktop.PolicyKit1
+  - --filesystem=host
 
 modules:
   - name: python3-gobject
@@ -35,6 +38,14 @@ modules:
       - type: archive
         url: https://files.pythonhosted.org/packages/source/p/psutil/psutil-5.9.8.tar.gz
         sha256: 6be126e3225486dff286a8fb9a06246a5253f4c7c53b475ea5f5ac934e64194c
+
+  - name: polkit
+    buildsystem: simple
+    build-commands:
+      - install -D io.github.mfat.portsinfo.policy /app/share/polkit-1/actions/io.github.mfat.portsinfo.policy
+    sources:
+      - type: file
+        path: io.github.mfat.portsinfo.policy
 
   - name: ports-info
     buildsystem: simple
