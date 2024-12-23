@@ -11,6 +11,11 @@ finish-args:
   - --socket=wayland
   # Allow network access for port scanning
   - --share=network
+  # DBus access
+  - --socket=session-bus
+  - --socket=system-bus
+  - --talk-name=org.freedesktop.DBus
+  - --system-talk-name=org.freedesktop.DBus
 
 modules:
   - name: python3-gobject
