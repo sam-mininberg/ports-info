@@ -570,30 +570,33 @@ class PortMonitorWindow(Adw.ApplicationWindow):
 class PortMonitorApp(Adw.Application):
     def __init__(self):
         super().__init__(application_id="com.github.mfat.ports-info",
-                        flags=Gio.ApplicationFlags.FLAGS_NONE)
+                        flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
+        
+        # Connect the activate signal
         self.connect('activate', self.on_activate)
-        self.connect('shutdown', self.on_shutdown)  # Add shutdown handler
         
-        # Set default app icon
-        icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
-        icon_theme.add_search_path("/usr/share/icons/hicolor/scalable/apps")
-        
+        # Set up actions
+        self.create_actions()
+
+    def create_actions(self):
         # Add keyboard shortcuts
         self.set_accels_for_action("win.search", ["<Control>f"])
         
+        # Create about action
         about_action = Gio.SimpleAction.new("about", None)
         about_action.connect("activate", self.on_about_action)
         self.add_action(about_action)
 
     def on_activate(self, app):
-        win = PortMonitorWindow(application=app)
-        win.set_icon_name("ports-info")
+        # Check if we already have a window
+        win = self.get_active_window()
+        if not win:
+            win = PortMonitorWindow(application=self)
         win.present()
 
     def on_shutdown(self, app):
         # Ensure clean shutdown
         for window in self.get_windows():
-            window.is_shutting_down = True
             window.close()
 
     def on_about_action(self, action, param):
@@ -606,9 +609,13 @@ class PortMonitorApp(Adw.Application):
             website="https://github.com/mfat/ports",
             license_type=Gtk.License.GPL_3_0,
             developers=["mFat"],
-            copyright=" 2024 mFat"
+            copyright="© 2024 mFat"
         )
         about.present()
 
-app = PortMonitorApp()
-app.run(None)
+def main():
+    app = PortMonitorApp()
+    return app.run(None)
+
+if __name__ == '__main__':
+    main()
